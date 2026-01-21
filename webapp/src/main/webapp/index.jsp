@@ -1,53 +1,96 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>DevOps Learning Registration</title>
+<title>DevOps Learning | Register</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root {
+  --neon: #00f5ff;
+  --green: #00ff9c;
+  --bg: #0b0f14;
+  --glass: rgba(255,255,255,0.08);
+}
+
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", system-ui;
 }
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  margin: 0;
+  background:
+    radial-gradient(circle at top, #112 0%, transparent 60%),
+    linear-gradient(135deg, #05070a, #0b0f14);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   color: #fff;
 }
 
-.card {
-  background: #111;
+/* ===== CARD ===== */
+.app {
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  animation: fadeIn 0.8s ease;
+  border-radius: 20px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+  animation: floatIn 1s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-h1 {
+/* ===== HEADER ===== */
+.header {
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 25px;
 }
 
-.sub {
-  text-align: center;
+.header h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  background: linear-gradient(90deg, var(--neon), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
   font-size: 0.85rem;
-  color: #aaa;
-  margin-bottom: 22px;
+  color: #9aa3ad;
 }
 
+/* ===== STEPS ===== */
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.step {
+  flex: 1;
+  height: 4px;
+  margin: 0 5px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.step span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--neon), var(--green));
+  transition: 0.4s;
+}
+
+/* ===== FIELDS ===== */
 .field {
   position: relative;
   margin-bottom: 18px;
@@ -55,118 +98,140 @@ h1 {
 
 .field input {
   width: 100%;
-  padding: 14px 12px;
-  border-radius: 8px;
-  border: 1px solid #333;
-  background: #1a1a1a;
+  padding: 15px 14px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid #222;
+  border-radius: 12px;
   color: #fff;
   outline: none;
+  font-size: 0.95rem;
 }
 
 .field label {
   position: absolute;
+  left: 14px;
   top: 50%;
-  left: 12px;
   transform: translateY(-50%);
-  color: #777;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  color: #888;
   pointer-events: none;
   transition: 0.3s;
-  background: #111;
+  background: var(--bg);
   padding: 0 6px;
 }
 
 .field input:focus + label,
 .field input:not(:placeholder-shown) + label {
   top: -6px;
-  font-size: 0.7rem;
-  color: #00e0ff;
+  color: var(--neon);
 }
 
+/* ===== PASSWORD METER ===== */
+.meter {
+  height: 6px;
+  border-radius: 10px;
+  background: #222;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  transition: 0.4s;
+}
+
+/* ===== BUTTON ===== */
 button {
   width: 100%;
-  padding: 14px;
-  border-radius: 8px;
+  padding: 15px;
+  border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #00e0ff, #00ff9c);
-  font-weight: bold;
+  background: linear-gradient(135deg, var(--neon), var(--green));
+  color: #000;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 10px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 15px 30px rgba(0,255,200,0.25);
 }
 
 button:hover {
-  box-shadow: 0 10px 20px rgba(0,255,200,0.3);
+  transform: translateY(-2px);
 }
 
-.strength {
-  font-size: 0.75rem;
-  margin-top: 5px;
+/* ===== SUCCESS ===== */
+.success {
+  text-align: center;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.success h2 {
+  color: var(--green);
 }
 
 .footer {
   text-align: center;
   margin-top: 15px;
   font-size: 0.8rem;
-  color: #aaa;
-}
-
-.footer a {
-  color: #00e0ff;
-  text-decoration: none;
-}
-
-.success {
-  text-align: center;
-  color: #00ff9c;
+  color: #888;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="app">
 
 <%
-  String submitted = request.getParameter("submit");
-  if (submitted == null) {
+  String submit = request.getParameter("submit");
+  if (submit == null) {
 %>
 
-  <h1>DevOps Learning Registration</h1>
-  <p class="sub">New user signup by <b>Toji Zenin</b></p>
+  <div class="header">
+    <h1>DevOps Learning</h1>
+    <p>Interactive registration · by Toji Zenin</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span id="s1"></span></div>
+    <div class="step"><span id="s2"></span></div>
+    <div class="step"><span id="s3"></span></div>
+  </div>
 
   <form method="post">
 
     <div class="field">
       <input type="text" name="name" required placeholder=" ">
-      <label>Full Name</label>
+      <label>👤 Full Name</label>
     </div>
 
     <div class="field">
       <input type="tel" name="mobile" pattern="[0-9]{10}" required placeholder=" ">
-      <label>Mobile Number</label>
+      <label>📱 Mobile Number</label>
     </div>
 
     <div class="field">
       <input type="email" name="email" required placeholder=" ">
-      <label>Email Address</label>
+      <label>📧 Email Address</label>
     </div>
 
     <div class="field">
       <input type="password" id="password" name="password" required placeholder=" ">
-      <label>Password</label>
-      <div id="strength" class="strength"></div>
+      <label>🔐 Password</label>
+      <div class="meter"><span id="meter"></span></div>
     </div>
 
-    <div class="field">
-      <input type="password" name="confirm" required placeholder=" ">
-      <label>Repeat Password</label>
-    </div>
-
-    <button type="submit" name="submit">Register</button>
+    <button type="submit" name="submit">🚀 Create DevOps Account</button>
   </form>
 
   <div class="footer">
-    Already have an account? <a href="#">Sign in</a>
+    CI/CD ready · Tomcat · Jenkins · AWS EC2
   </div>
 
 <%
@@ -175,9 +240,9 @@ button:hover {
 %>
 
   <div class="success">
-    <h1>Registration Successful 🎉</h1>
-    <h2>Welcome, <%= name %></h2>
-    <p>Thank you & Happy DevOps Learning 🚀</p>
+    <h2>Welcome, <%= name %> 🎉</h2>
+    <p>Your DevOps journey starts now.</p>
+    <p>Happy Learning 🚀</p>
   </div>
 
 <%
@@ -188,20 +253,26 @@ button:hover {
 
 <script>
 const password = document.getElementById("password");
-const strength = document.getElementById("strength");
+const meter = document.getElementById("meter");
+const s1 = document.getElementById("s1");
+const s2 = document.getElementById("s2");
+const s3 = document.getElementById("s3");
 
 if (password) {
-  password.addEventListener("keyup", () => {
-    const val = password.value;
-    if (val.length < 6) {
-      strength.textContent = "Weak password";
-      strength.style.color = "#ff4d4d";
-    } else if (/[A-Z]/.test(val) && /[0-9]/.test(val)) {
-      strength.textContent = "Strong password";
-      strength.style.color = "#00ff9c";
+  password.addEventListener("input", () => {
+    const v = password.value;
+    if (v.length < 4) {
+      meter.style.width = "30%";
+      meter.style.background = "#ff4d4d";
+      s1.style.width = "100%";
+    } else if (/[A-Z]/.test(v) && /[0-9]/.test(v)) {
+      meter.style.width = "100%";
+      meter.style.background = "#00ff9c";
+      s2.style.width = s3.style.width = "100%";
     } else {
-      strength.textContent = "Medium password";
-      strength.style.color = "#ffc107";
+      meter.style.width = "60%";
+      meter.style.background = "#ffc107";
+      s2.style.width = "100%";
     }
   });
 }
